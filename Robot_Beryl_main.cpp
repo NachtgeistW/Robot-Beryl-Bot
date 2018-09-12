@@ -7,6 +7,7 @@ using namespace CQ;
 static Logger Robot_Beryl("Robot_Beryl");
 
 //initialize
+feedback fb;
 WholeRepeat wr;
 
 EVE_PrivateMsg_EX(SendPrivateMsg)
@@ -28,37 +29,23 @@ EVE_PrivateMsg_EX(SendPrivateMsg)
 		"A botched imitation.");
 
 	//send feedback message
-	if (message.find("反馈") == 0 || message.find("告诉你主人") == 0)
-	{
-		std::string to_be_sent = util::int64_ttos(eve.fromQQ) + ':' + eve.message;
-		sendPrivateMsg(util::Master, to_be_sent);
-		msg << "已经告诉夜轮了，谢谢你的反馈（鞠躬）" << send;
-	}
+	msg << fb.fb_in_privt(eve.fromQQ, eve.message) << send;
 }
 
 EVE_GroupMsg_EX(GroupLightFunction) {
 	Robot_Beryl.Debug() << DEBUGINFO << eve.message;
-	// 获得一个和事件有关的消息对象
-	// 这个消息对象已经自动关联事件对应的群或者好友
 	auto msg = eve.sendMsg();
 
-	//message receive
-	auto message = eve.message;
 	//send feedback message
-	if (message.find(CQ::code::at(util::Beryl)) == 0 && message.find("反馈") != message.npos || message.find("告诉你主人") != message.npos)
-	{
-		std::string to_be_sent = util::int64_ttos(eve.fromQQ) + ':' + eve.message;
-		sendPrivateMsg(util::Master, to_be_sent);
-		msg << CQ::code::at(eve.fromQQ) << "已经告诉夜轮了，谢谢你的反馈（鞠躬）" << send;
-	}
+	msg << fb.fb_in_group(eve.fromGroup, eve.fromQQ, eve.message);
 
 	/*while only being at.
 	There is a problem that I can't use compare and I am forced to use find,
-	but Hikari will also respone when text following the at.*/
-	if (message.find(code::at(util::Beryl)) == 0 && !util::checkBot(eve.fromQQ, util::Robot))
+	so Robot Beryl will also respone when text following the at.*/
+	if (eve.message.find(code::at(util::Beryl)) == 0 && !util::checkBot(eve.fromQQ, util::Robot))
 		msg << code::at(eve.fromQQ) << "  " << onlyBeingAt() << send;
 
-	if (message.find("♂") != string::npos && !util::checkBot(eve.fromQQ, util::Robot))
+	if (eve.message.find("♂") != string::npos && !util::checkBot(eve.fromQQ, util::Robot))
 		msg << code::at(eve.fromQQ) << " 这是什么奇怪符号？" << send;
 
 }
