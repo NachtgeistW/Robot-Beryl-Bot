@@ -77,6 +77,9 @@
     <ClInclude Include="functionality\rage_whole.h">
       <Filter>源文件\functionality\rage</Filter>
     </ClInclude>
+    <ClInclude Include="functionality\feedback.h">
+      <Filter>源文件\functionality</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="com.cqp.NachtgeistW.Beryl.json" />

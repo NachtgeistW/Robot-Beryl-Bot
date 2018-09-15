@@ -1,5 +1,4 @@
 #include "util/functionality.h"
-#include "functionality/rage_whole.h"
 using namespace std;
 using namespace CQ;
 
@@ -7,6 +6,7 @@ using namespace CQ;
 static Logger Robot_Beryl("Robot_Beryl");
 
 //initialize
+feedback fb;
 WholeRepeat wr;
 
 EVE_PrivateMsg_EX(SendPrivateMsg)
@@ -20,7 +20,7 @@ EVE_PrivateMsg_EX(SendPrivateMsg)
 
 	if (!message.compare("help"))
 		eve.sendMsg("你好，这里是机器人小绿。机绿目前支持的功能如下：\n"
-		"反馈：语法为“反馈/告诉你主人 + （你想反馈给开发者的话）”，Hikari会把这条消息转发给开发者。示例：告诉你主人夏橙妹妹她错了\n"
+		"反馈：语法为“反馈/告诉你主人 + （你想反馈给开发者的话）”，机绿会把这条消息转发给开发者。示例：告诉你主人夏橙妹妹她错了\n"
 		"另有一些算不上功能的属性，如嘲讽。\n"
 		"机绿的功能尚在不断完善中。如果出了什么意外的话请原谅。\n"
 		"祝使用愉快（鞠躬）\n"
@@ -28,37 +28,23 @@ EVE_PrivateMsg_EX(SendPrivateMsg)
 		"A botched imitation.");
 
 	//send feedback message
-	if (message.find("反馈") == 0 || message.find("告诉你主人") == 0)
-	{
-		std::string to_be_sent = util::int64_ttos(eve.fromQQ) + ':' + eve.message;
-		sendPrivateMsg(util::Master, to_be_sent);
-		msg << "已经告诉夜轮了，谢谢你的反馈（鞠躬）" << send;
-	}
+	msg << fb.fb_in_privt(eve.fromQQ, eve.message) << send;
 }
 
 EVE_GroupMsg_EX(GroupLightFunction) {
 	Robot_Beryl.Debug() << DEBUGINFO << eve.message;
-	// 获得一个和事件有关的消息对象
-	// 这个消息对象已经自动关联事件对应的群或者好友
 	auto msg = eve.sendMsg();
 
-	//message receive
-	auto message = eve.message;
 	//send feedback message
-	if (message.find(CQ::code::at(util::Beryl)) == 0 && message.find("反馈") != message.npos || message.find("告诉你主人") != message.npos)
-	{
-		std::string to_be_sent = util::int64_ttos(eve.fromQQ) + ':' + eve.message;
-		sendPrivateMsg(util::Master, to_be_sent);
-		msg << CQ::code::at(eve.fromQQ) << "已经告诉夜轮了，谢谢你的反馈（鞠躬）" << send;
-	}
+	msg << fb.fb_in_group(eve.fromGroup, eve.fromQQ, eve.message) << send;
 
 	/*while only being at.
 	There is a problem that I can't use compare and I am forced to use find,
-	but Hikari will also respone when text following the at.*/
-	if (message.find(code::at(util::Beryl)) == 0 && !util::checkBot(eve.fromQQ, util::Robot))
+	so Robot Beryl will also respone when text following the at.*/
+	if (eve.message.find(code::at(util::Beryl)) == 0 && !util::checkBot(eve.fromQQ, util::Robot))
 		msg << code::at(eve.fromQQ) << "  " << onlyBeingAt() << send;
 
-	if (message.find("♂") != string::npos && !util::checkBot(eve.fromQQ, util::Robot))
+	if (eve.message.find("♂") != string::npos && !util::checkBot(eve.fromQQ, util::Robot))
 		msg << code::at(eve.fromQQ) << " 这是什么奇怪符号？" << send;
 
 }

@@ -83,6 +83,7 @@
     <ClCompile Include="util\util.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="functionality\feedback.h" />
     <ClInclude Include="functionality\functionality.h" />
     <ClInclude Include="functionality\rage_whole.h" />
     <ClInclude Include="functionality\urge_sleep.h" />
