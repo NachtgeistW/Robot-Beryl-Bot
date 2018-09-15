@@ -1,5 +1,4 @@
 #include "util/functionality.h"
-#include "functionality/rage_whole.h"
 using namespace std;
 using namespace CQ;
 
@@ -21,7 +20,7 @@ EVE_PrivateMsg_EX(SendPrivateMsg)
 
 	if (!message.compare("help"))
 		eve.sendMsg("你好，这里是机器人小绿。机绿目前支持的功能如下：\n"
-		"反馈：语法为“反馈/告诉你主人 + （你想反馈给开发者的话）”，Hikari会把这条消息转发给开发者。示例：告诉你主人夏橙妹妹她错了\n"
+		"反馈：语法为“反馈/告诉你主人 + （你想反馈给开发者的话）”，机绿会把这条消息转发给开发者。示例：告诉你主人夏橙妹妹她错了\n"
 		"另有一些算不上功能的属性，如嘲讽。\n"
 		"机绿的功能尚在不断完善中。如果出了什么意外的话请原谅。\n"
 		"祝使用愉快（鞠躬）\n"
@@ -37,7 +36,7 @@ EVE_GroupMsg_EX(GroupLightFunction) {
 	auto msg = eve.sendMsg();
 
 	//send feedback message
-	msg << fb.fb_in_group(eve.fromGroup, eve.fromQQ, eve.message);
+	msg << fb.fb_in_group(eve.fromGroup, eve.fromQQ, eve.message) << send;
 
 	/*while only being at.
 	There is a problem that I can't use compare and I am forced to use find,

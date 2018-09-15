@@ -51,9 +51,6 @@
     <ClCompile Include="functionality\feedback.cpp">
       <Filter>源文件\functionality</Filter>
     </ClCompile>
-    <ClCompile Include="functionality\rage.cpp">
-      <Filter>源文件\functionality\rage</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\APPINFO.h">
@@ -80,11 +77,8 @@
     <ClInclude Include="functionality\rage_whole.h">
       <Filter>源文件\functionality\rage</Filter>
     </ClInclude>
-    <ClInclude Include="functionality\rage.h">
-      <Filter>源文件\functionality\rage</Filter>
-    </ClInclude>
     <ClInclude Include="functionality\feedback.h">
-      <Filter>源文件</Filter>
+      <Filter>源文件\functionality</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

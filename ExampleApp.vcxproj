@@ -73,7 +73,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="functionality\feedback.cpp" />
-    <ClCompile Include="functionality\rage.cpp" />
     <ClCompile Include="functionality\rage_whole.cpp" />
     <ClCompile Include="functionality\urge_sleep.cpp" />
     <ClCompile Include="Robot_Beryl_fun.cpp" />
@@ -86,7 +85,6 @@
   <ItemGroup>
     <ClInclude Include="functionality\feedback.h" />
     <ClInclude Include="functionality\functionality.h" />
-    <ClInclude Include="functionality\rage.h" />
     <ClInclude Include="functionality\rage_whole.h" />
     <ClInclude Include="functionality\urge_sleep.h" />
     <ClInclude Include="Robot_Beryl_fun.h" />

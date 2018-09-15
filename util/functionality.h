@@ -5,3 +5,4 @@
 #include "../functionality/urge_sleep.h"
 #include "../util/GroupQQ_act_count.h"
 #include "../functionality/feedback.h"
+#include "../functionality/rage_whole.h"
