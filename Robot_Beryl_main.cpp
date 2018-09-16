@@ -42,8 +42,8 @@ EVE_GroupMsg_EX(GroupLightFunction) {
 	/*while only being at.
 	There is a problem that I can't use compare and I am forced to use find,
 	so Robot Beryl will also respone when text following the at.*/
-	if (eve.message.find(code::at(util::Beryl)) == 0 && !util::checkBot(eve.fromQQ, util::Robot))
-		msg << code::at(eve.fromQQ) << "  " << onlyBeingAt() << send;
+	At at;
+	at.only_being_at(eve.fromGroup, eve.message);
 
 	if (eve.message.find("¡á") != string::npos && !util::checkBot(eve.fromQQ, util::Robot))
 		msg << code::at(eve.fromQQ) << " ÕâÊÇÊ²Ã´Ææ¹Ö·ûºÅ£¿" << send;

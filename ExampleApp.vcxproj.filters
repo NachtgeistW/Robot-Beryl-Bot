@@ -51,6 +51,9 @@
     <ClCompile Include="functionality\feedback.cpp">
       <Filter>源文件\functionality</Filter>
     </ClCompile>
+    <ClCompile Include="functionality\only_being_at.cpp">
+      <Filter>源文件\functionality</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\APPINFO.h">
@@ -78,6 +81,9 @@
       <Filter>源文件\functionality\rage</Filter>
     </ClInclude>
     <ClInclude Include="functionality\feedback.h">
+      <Filter>源文件\functionality</Filter>
+    </ClInclude>
+    <ClInclude Include="functionality\only_being_at.h">
       <Filter>源文件\functionality</Filter>
     </ClInclude>
   </ItemGroup>
