@@ -22,6 +22,12 @@
     <Filter Include="源文件\functionality\rage">
       <UniqueIdentifier>{1aa32d51-98a5-477e-9633-1dd200f0d487}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\functionality\basic">
+      <UniqueIdentifier>{f58b19ff-f315-466c-9f17-f62d1c7d5ad8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\functionality\ub_memo_view">
+      <UniqueIdentifier>{931939f8-e097-498a-b6d6-481471d6a42f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\appmain.cpp">
@@ -49,10 +55,16 @@
       <Filter>源文件\functionality\rage</Filter>
     </ClCompile>
     <ClCompile Include="functionality\feedback.cpp">
-      <Filter>源文件\functionality</Filter>
+      <Filter>源文件\functionality\basic</Filter>
     </ClCompile>
     <ClCompile Include="functionality\only_being_at.cpp">
+      <Filter>源文件\functionality\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="functionality\Admin_cmd.cpp">
       <Filter>源文件\functionality</Filter>
+    </ClCompile>
+    <ClCompile Include="functionality\store_memo.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -81,10 +93,16 @@
       <Filter>源文件\functionality\rage</Filter>
     </ClInclude>
     <ClInclude Include="functionality\feedback.h">
-      <Filter>源文件\functionality</Filter>
+      <Filter>源文件\functionality\basic</Filter>
     </ClInclude>
     <ClInclude Include="functionality\only_being_at.h">
+      <Filter>源文件\functionality\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="functionality\Admin_cmd.h">
       <Filter>源文件\functionality</Filter>
+    </ClInclude>
+    <ClInclude Include="functionality\store_memo.h">
+      <Filter>源文件\functionality\ub_memo_view</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,5 @@
 #include "util/functionality.h"
+#include "functionality/Admin_cmd.h"
 using namespace std;
 using namespace CQ;
 
@@ -39,15 +40,15 @@ EVE_GroupMsg_EX(GroupLightFunction) {
 	//send feedback message
 	msg << fb.fb_in_group(eve.fromGroup, eve.fromQQ, eve.message) << send;
 
-	/*while only being at.
-	There is a problem that I can't use compare and I am forced to use find,
-	so Robot Beryl will also respone when text following the at.*/
+	//while only being at.
 	At at;
 	at.only_being_at(eve.fromGroup, eve.message);
 
+	reply_origin_msg(eve.fromGroup, eve.fromQQ, eve.message);
+	/*
 	if (eve.message.find("¡á") != string::npos && !util::checkBot(eve.fromQQ, util::Robot))
 		msg << code::at(eve.fromQQ) << " ÕâÊÇÊ²Ã´Ææ¹Ö·ûºÅ£¿" << send;
-
+	*/
 }
 
 EVE_GroupMsg_EX(SetGroupBan){

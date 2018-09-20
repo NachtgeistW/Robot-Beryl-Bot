@@ -72,9 +72,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="functionality\Admin_cmd.cpp" />
     <ClCompile Include="functionality\feedback.cpp" />
     <ClCompile Include="functionality\only_being_at.cpp" />
     <ClCompile Include="functionality\rage_whole.cpp" />
+    <ClCompile Include="functionality\store_memo.cpp" />
     <ClCompile Include="functionality\urge_sleep.cpp" />
     <ClCompile Include="Robot_Beryl_fun.cpp" />
     <ClCompile Include="Robot_Beryl_main.cpp" />
@@ -84,8 +86,10 @@
     <ClCompile Include="util\util.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="functionality\Admin_cmd.h" />
     <ClInclude Include="functionality\feedback.h" />
     <ClInclude Include="functionality\functionality.h" />
+    <ClInclude Include="functionality\store_memo.h" />
     <ClInclude Include="functionality\only_being_at.h" />
     <ClInclude Include="functionality\rage_whole.h" />
     <ClInclude Include="functionality\urge_sleep.h" />
