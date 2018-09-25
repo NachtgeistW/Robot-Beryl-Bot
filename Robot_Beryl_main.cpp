@@ -49,6 +49,19 @@ EVE_GroupMsg_EX(GroupLightFunction) {
 	if (eve.message.find("♂") != string::npos && !util::checkBot(eve.fromQQ, util::Robot))
 		msg << code::at(eve.fromQQ) << " 这是什么奇怪符号？" << send;
 	*/
+	//functions are contained in ub_memo_view
+	try {
+		WholeMemo wm;
+		wm.initialize(util::Master);
+	}
+	catch (...) {
+		std::string to_be_sent = "好、好像出问题了！\n"
+			"消息是从群" + util::int64_ttos(eve.fromGroup) + "里的成员" + util::int64_ttos(eve.fromQQ) + "发送的“" + eve.message + "”。\n"
+			"出错的模块是GroupLightFunction。\n"
+			"真的很对不起，请帮忙看一下！";
+		sendPrivateMsg(util::Master, to_be_sent);
+	}
+
 }
 
 EVE_GroupMsg_EX(SetGroupBan){

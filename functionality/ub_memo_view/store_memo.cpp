@@ -1,13 +1,30 @@
-#include "store_memo.h"
+#include "../../util/functionality.h"
 
-bool SongInfo::read_chart(string path)
+void UBSongInfo::initialize(int64_t qq)
+{
+	try
+	{
+		if (!load_song_list(util::path + "song list.txt"))
+			throw std::runtime_error("我找不到Jubeat曲目列表的文件路径了……");
+	}
+	catch (std::runtime_error file_does_not_find)
+	{
+		CQ::sendPrivateMsg(qq, file_does_not_find.what());
+	}
+
+}
+
+bool UBSongInfo::load_local_memo(const string name, int64_t group)
 {
 	std::string Title, CurLine, FolLine, ToBePush;
 	std::vector<string> tempmemo;
 
 	std::regex digit(std::string("\\d+"));
 	std::smatch line_num;
-	std::ifstream input(path);
+	std::ifstream input(util::path + name);
+	if (!input.good())
+		return false;
+
 	//read the song info
 	for (int i = 1; i < 10; i++)
 	{
@@ -54,7 +71,26 @@ bool SongInfo::read_chart(string path)
 	tempmemo.push_back(ToBePush);
 
 	input.close();
-	if(!Memo.insert(std::make_pair(Title, tempmemo)).second)
+	if (!Memo.insert(std::make_pair(Title, tempmemo)).second)
 		return false;
+	return true;
+}
+
+bool UBSongInfo::load_song_list(const string path)
+{
+	string line, tempname;
+	unsigned int level;
+	std::ifstream input(path);
+	if (!input.good())
+		return false;
+	while (std::getline(input, line))
+	{
+		std::istringstream record(line);
+		record >> tempname;
+		while (record >> level)
+			SongList.insert(std::make_pair(tempname, level));
+	}
+	SongList.insert(std::make_pair(tempname, level));
+	input.close();
 	return true;
 }

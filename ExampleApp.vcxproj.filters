@@ -63,8 +63,11 @@
     <ClCompile Include="functionality\Admin_cmd.cpp">
       <Filter>源文件\functionality</Filter>
     </ClCompile>
-    <ClCompile Include="functionality\store_memo.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="functionality\ub_memo_view\store_memo.cpp">
+      <Filter>源文件\functionality\ub_memo_view</Filter>
+    </ClCompile>
+    <ClCompile Include="functionality\ub_memo_view\search_song.cpp">
+      <Filter>源文件\functionality\ub_memo_view</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -101,7 +104,10 @@
     <ClInclude Include="functionality\Admin_cmd.h">
       <Filter>源文件\functionality</Filter>
     </ClInclude>
-    <ClInclude Include="functionality\store_memo.h">
+    <ClInclude Include="functionality\ub_memo_view\search_song.h">
+      <Filter>源文件\functionality\ub_memo_view</Filter>
+    </ClInclude>
+    <ClInclude Include="functionality\ub_memo_view\store_memo.h">
       <Filter>源文件\functionality\ub_memo_view</Filter>
     </ClInclude>
   </ItemGroup>
