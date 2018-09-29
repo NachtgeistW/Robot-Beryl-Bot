@@ -1,4 +1,5 @@
 #include "util/functionality.h"
+#include "functionality/Admin_cmd.h"
 using namespace std;
 using namespace CQ;
 
@@ -39,14 +40,27 @@ EVE_GroupMsg_EX(GroupLightFunction) {
 	//send feedback message
 	msg << fb.fb_in_group(eve.fromGroup, eve.fromQQ, eve.message) << send;
 
-	/*while only being at.
-	There is a problem that I can't use compare and I am forced to use find,
-	so Robot Beryl will also respone when text following the at.*/
+	//while only being at.
 	At at;
 	at.only_being_at(eve.fromGroup, eve.message);
 
+	reply_origin_msg(eve.fromGroup, eve.fromQQ, eve.message);
+	/*
 	if (eve.message.find("♂") != string::npos && !util::checkBot(eve.fromQQ, util::Robot))
 		msg << code::at(eve.fromQQ) << " 这是什么奇怪符号？" << send;
+	*/
+	//functions are contained in ub_memo_view
+	try {
+		WholeMemo wm;
+		wm.initialize(util::Master);
+	}
+	catch (...) {
+		std::string to_be_sent = "好、好像出问题了！\n"
+			"消息是从群" + util::int64_ttos(eve.fromGroup) + "里的成员" + util::int64_ttos(eve.fromQQ) + "发送的“" + eve.message + "”。\n"
+			"出错的模块是GroupLightFunction。\n"
+			"真的很对不起，请帮忙看一下！";
+		sendPrivateMsg(util::Master, to_be_sent);
+	}
 
 }
 
