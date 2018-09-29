@@ -76,7 +76,7 @@
     <ClCompile Include="functionality\feedback.cpp" />
     <ClCompile Include="functionality\only_being_at.cpp" />
     <ClCompile Include="functionality\rage_whole.cpp" />
-    <ClCompile Include="functionality\ub_memo_view\search_song.cpp" />
+    <ClCompile Include="functionality\ub_memo_view\search_song_whole.cpp" />
     <ClCompile Include="functionality\ub_memo_view\store_memo.cpp" />
     <ClCompile Include="functionality\urge_sleep.cpp" />
     <ClCompile Include="Robot_Beryl_fun.cpp" />
@@ -92,7 +92,7 @@
     <ClInclude Include="functionality\functionality.h" />
     <ClInclude Include="functionality\only_being_at.h" />
     <ClInclude Include="functionality\rage_whole.h" />
-    <ClInclude Include="functionality\ub_memo_view\search_song.h" />
+    <ClInclude Include="functionality\ub_memo_view\search_song_whole.h" />
     <ClInclude Include="functionality\ub_memo_view\store_memo.h" />
     <ClInclude Include="functionality\urge_sleep.h" />
     <ClInclude Include="Robot_Beryl_fun.h" />

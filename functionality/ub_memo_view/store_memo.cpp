@@ -2,13 +2,11 @@
 
 void UBSongInfo::initialize(int64_t qq)
 {
-	try
-	{
+	try	{
 		if (!load_song_list(util::path + "song list.txt"))
 			throw std::runtime_error("我找不到Jubeat曲目列表的文件路径了……");
 	}
-	catch (std::runtime_error file_does_not_find)
-	{
+	catch (std::runtime_error file_does_not_find){
 		CQ::sendPrivateMsg(qq, file_does_not_find.what());
 	}
 
@@ -78,7 +76,7 @@ bool UBSongInfo::load_local_memo(const string name, int64_t group)
 
 bool UBSongInfo::load_song_list(const string path)
 {
-	string line, tempname;
+	string line, temp_name;
 	unsigned int level;
 	std::ifstream input(path);
 	if (!input.good())
@@ -86,11 +84,50 @@ bool UBSongInfo::load_song_list(const string path)
 	while (std::getline(input, line))
 	{
 		std::istringstream record(line);
-		record >> tempname;
+		record >> temp_name;
 		while (record >> level)
-			SongList.insert(std::make_pair(tempname, level));
+			SongList.insert(std::make_pair(temp_name, level));
 	}
-	SongList.insert(std::make_pair(tempname, level));
+	SongList.insert(std::make_pair(temp_name, level));
 	input.close();
 	return true;
+}
+
+bool UBSongInfo::search_song_list(const string name)
+{
+	for (auto begin = SongList.begin(); begin != SongList.end(); begin++)
+		if ((*begin).first == name)
+			return true;
+	return false;
+}
+
+bool UBSongInfo::load_alias_list(const string path)
+{
+	std::regex reg(string("(.*+)"));
+	string line, temp_name;
+	std::ifstream input(path);
+	if (!input.good())
+		return false;
+	while (std::getline(input, line))
+	{
+		std::istringstream record(line);
+		record >> temp_name;
+		while (record >> level)
+			SongList.insert(std::make_pair(temp_name, level));
+	}
+	SongList.insert(std::make_pair(temp_name, level));
+	input.close();
+	return true;
+}
+
+bool UBSongInfo::search_alias_list(string name)
+{
+	for (auto begin = AliasList.begin(); begin != AliasList.end(); begin++)
+		if ((*begin).first == name)
+		{
+			name = (*begin).second;
+			return true;
+		}
+	return false;
+
 }
