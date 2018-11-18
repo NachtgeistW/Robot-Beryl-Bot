@@ -3,7 +3,7 @@
 string At::select_reply(void)
 {
 	string reply_to_member;
-	switch (util::randNum(40))
+	switch (util::RandInt_uniform(0, 40))
 	{
 	case 0:
 		reply_to_member = "夜轮？就是那个又菜又有重度拖延症还整天咕咕咕的人吗？";

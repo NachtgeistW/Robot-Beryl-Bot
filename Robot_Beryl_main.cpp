@@ -9,6 +9,7 @@ static Logger Robot_Beryl("Robot_Beryl");
 //initialize
 feedback fb;
 WholeRepeat wr;
+Omikuji omi;
 
 EVE_PrivateMsg_EX(SendPrivateMsg)
 {
@@ -45,14 +46,11 @@ EVE_GroupMsg_EX(GroupLightFunction) {
 	at.only_being_at(eve.fromGroup, eve.message);
 
 	reply_origin_msg(eve.fromGroup, eve.fromQQ, eve.message);
-	/*
-	if (eve.message.find("♂") != string::npos && !util::checkBot(eve.fromQQ, util::Robot))
-		msg << code::at(eve.fromQQ) << " 这是什么奇怪符号？" << send;
-	*/
-	//functions are contained in ub_memo_view
+
 	try {
-		WholeMemo wm;
-		wm.initialize(util::Master);
+		//functions are contained in random_fortunes.h and random_fortunes.cpp
+		omi.ShowDailyOmikuji(eve.fromGroup, eve.fromQQ, eve.message);
+		omi.ResetOmikuji(eve.fromQQ, eve.message);
 	}
 	catch (...) {
 		std::string to_be_sent = "好、好像出问题了！\n"
@@ -136,6 +134,7 @@ EVE_GroupMsg_EX(SetGroupBan){
 	}
 }
 
+/*
 EVE_GroupMsg_EX(Repeat_Taunt) {
 	Robot_Beryl.Debug() << DEBUGINFO << eve.message;
 	auto msg = eve.sendMsg();
@@ -153,3 +152,4 @@ EVE_GroupMsg_EX(Repeat_Taunt) {
 		sendPrivateMsg(util::Master, to_be_sent);
 	}
 }
+*/

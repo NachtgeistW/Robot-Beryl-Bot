@@ -15,7 +15,7 @@ namespace util {
 	const int64_t Master = 562231326;	//Ö÷ÈËµÄQQºÅ
 	const std::string path = "conf\\";
 
-	int randNum(int n);
+	int RandInt_uniform(int begin, int end);
 
 	static std::vector<int64_t> Robot{ 2718434132, 3304584594, 3461119188, 2748920600, 2130638764,530752474 };
 	//bool getBot(std::vector<int64_t>& bot);

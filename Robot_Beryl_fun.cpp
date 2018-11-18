@@ -22,7 +22,7 @@ void useCmdtoBan(EVEGroupMsg &eve, GroupMemberInfo MemberAInfo, GroupMemberInfo 
 		msg << "我……明白你的意思……但我真的做不到……对不起……" << send;
 	else if (MemberAInfo.permissions == 1 && MemberBInfo.permissions == 1)
 	{
-		if (util::randNum(15) == 15)
+		if (util::RandInt_uniform(0, 15) == 15)
 			setGroupBan(eve.fromGroup, MemberAInfo.QQID, time);
 		else
 			setGroupBan(eve.fromGroup, MemberBInfo.QQID, time);

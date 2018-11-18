@@ -73,6 +73,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="functionality\Admin_cmd.cpp" />
+    <ClCompile Include="functionality\basic\random_fortunes.cpp" />
     <ClCompile Include="functionality\feedback.cpp" />
     <ClCompile Include="functionality\only_being_at.cpp" />
     <ClCompile Include="functionality\rage_whole.cpp" />
@@ -88,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="functionality\Admin_cmd.h" />
+    <ClInclude Include="functionality\basic\random_fortunes.h" />
     <ClInclude Include="functionality\feedback.h" />
     <ClInclude Include="functionality\functionality.h" />
     <ClInclude Include="functionality\only_being_at.h" />

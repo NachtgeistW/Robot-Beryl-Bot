@@ -69,6 +69,9 @@
     <ClCompile Include="functionality\ub_memo_view\search_song_whole.cpp">
       <Filter>源文件\functionality\ub_memo_view</Filter>
     </ClCompile>
+    <ClCompile Include="functionality\basic\random_fortunes.cpp">
+      <Filter>源文件\functionality\basic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\APPINFO.h">
@@ -109,6 +112,9 @@
     </ClInclude>
     <ClInclude Include="functionality\ub_memo_view\search_song_whole.h">
       <Filter>源文件\functionality\ub_memo_view</Filter>
+    </ClInclude>
+    <ClInclude Include="functionality\basic\random_fortunes.h">
+      <Filter>源文件\functionality\basic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

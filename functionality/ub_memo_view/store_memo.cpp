@@ -105,6 +105,7 @@ bool UBSongInfo::load_alias_list(const string path)
 {
 	std::regex reg(string("(.*+)"));
 	string line, temp_name;
+	unsigned int level;
 	std::ifstream input(path);
 	if (!input.good())
 		return false;

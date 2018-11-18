@@ -1,9 +1,9 @@
 #include "functionality.h"
 
-int util::randNum(int n)
+int util::RandInt_uniform(int begin, int end)
 {
-	static std::uniform_int_distribution<int> dist(0, n);	//随机生成0到n间的数
-	static std::random_device device;						//随机数生成器
+	std::uniform_int_distribution<int> dist(begin, end);	//随机数分布，均匀生成begin到end间的数
+	static std::random_device device;						//随机数引擎，需要mt
 	static std::mt19937 gen(device());						//给mt提供种子
 	return dist(gen);
 }

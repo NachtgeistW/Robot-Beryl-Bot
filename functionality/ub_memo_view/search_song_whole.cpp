@@ -38,3 +38,12 @@ bool WholeMemo::match_song_whole(const string msg, string &target)
 		return false;
 }
 
+bool WholeMemo::search_song_list(const string name)
+{
+	return false;
+}
+
+void WholeMemo::print_memo(int64_t qq)
+{
+}
+
