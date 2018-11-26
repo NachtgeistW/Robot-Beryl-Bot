@@ -9,13 +9,7 @@ Naming rules
 #include <CQLogger.h>
 #include <CQAPI_EX.h>
 
-const char *onlyBeingAt(void);
-
 //Use this function to get the QQID from a message
 void getBanID(const std::string message, std::vector<long long>&banid);
 
 void useCmdtoBan(CQ::EVEGroupMsg &eve, CQ::GroupMemberInfo MemberAInfo, CQ::GroupMemberInfo MemberBInfo, int64_t time);
-
-
-
-//void throwError(static std::runtime_error err);

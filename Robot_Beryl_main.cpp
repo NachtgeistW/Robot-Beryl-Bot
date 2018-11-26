@@ -21,36 +21,46 @@ EVE_PrivateMsg_EX(SendPrivateMsg)
 		msg << "已启动" << send;
 
 	if (!message.compare("help"))
-		eve.sendMsg("你好，这里是机器人小绿。机绿目前支持的功能如下：\n"
-		"反馈：语法为“艾特机器人 + 反馈/告诉你主人 + （你想反馈给开发者的话）”，机绿会把这条消息转发给开发者。\n"
+		eve.sendMsg("这是开发者留下的话：\n"
+		"“你好，这里夜轮。机绿目前支持的功能如下：\n"
+		"反馈：语法为“@机绿 + 反馈/告诉你主人 + （你想反馈给开发者的话）”，机绿会把这条消息转发给开发者。\n"
 		"示例：@机绿 告诉你主人夏橙妹妹她错了\n"
+		"抽签：可以抽一下你今天的音游运势。具体语法请发送help Omikuji或help 抽签查看。\n"
 		"另有一些算不上功能的属性，如嘲讽。\n"
 		"机绿的功能尚在不断完善中。如果出了什么意外的话请原谅。\n"
 		"祝使用愉快（鞠躬）\n"
 		"Creator: NachtgeistW. QQID:562231326\n"
-		"A botched imitation.");
+		"A botched imitation.”");
 
 	//send feedback message
 	msg << fb.fb_in_privt(eve.fromQQ, eve.message) << send;
+
+	//Daily Omikuji 
+	msg << omi.ShowHelpInfo(eve.message) << send;
+	msg << omi.ShowDailyOmikuji(eve.fromQQ, eve.message) << send;
+	msg << omi.MasterCommand(eve.fromQQ, eve.message) << send;
+
 }
 
 EVE_GroupMsg_EX(GroupLightFunction) {
 	Robot_Beryl.Debug() << DEBUGINFO << eve.message;
 	auto msg = eve.sendMsg();
 
-	//send feedback message
-	msg << fb.fb_in_group(eve.fromGroup, eve.fromQQ, eve.message) << send;
-
-	//while only being at.
-	At at;
-	at.only_being_at(eve.fromGroup, eve.message);
-
-	reply_origin_msg(eve.fromGroup, eve.fromQQ, eve.message);
-
 	try {
+		//send feedback message
+		msg << fb.fb_in_group(eve.fromGroup, eve.fromQQ, eve.message) << send;
+
+		//while only being at.
+		At at;
+		at.only_being_at(eve.fromGroup, eve.message);
+
+		reply_origin_msg(eve.fromGroup, eve.fromQQ, eve.message);
+
 		//functions are contained in random_fortunes.h and random_fortunes.cpp
-		omi.ShowDailyOmikuji(eve.fromGroup, eve.fromQQ, eve.message);
-		omi.ResetOmikuji(eve.fromQQ, eve.message);
+		msg << omi.ShowHelpInfo(eve.message) << send;
+		msg << omi.ShowDailyOmikuji(eve.fromQQ, eve.message) << send;
+		omi.ResetOmikuji();
+		msg << omi.MasterCommand(eve.fromQQ, eve.message) << send;
 	}
 	catch (...) {
 		std::string to_be_sent = "好、好像出问题了！\n"

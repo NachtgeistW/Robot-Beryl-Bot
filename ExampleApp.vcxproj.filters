@@ -80,9 +80,6 @@
     <ClInclude Include="functionality\urge_sleep.h">
       <Filter>源文件\functionality</Filter>
     </ClInclude>
-    <ClInclude Include="functionality\functionality.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Robot_Beryl_fun.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -90,9 +87,6 @@
       <Filter>源文件\util</Filter>
     </ClInclude>
     <ClInclude Include="util\util.h">
-      <Filter>源文件\util</Filter>
-    </ClInclude>
-    <ClInclude Include="util\functionality.h">
       <Filter>源文件\util</Filter>
     </ClInclude>
     <ClInclude Include="functionality\rage_whole.h">
@@ -115,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="functionality\basic\random_fortunes.h">
       <Filter>源文件\functionality\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="util\functionality.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

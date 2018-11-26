@@ -1,4 +1,5 @@
 #pragma once
+#include <CQAPI_EX.h>
 #include <vector>
 #include <string>
 #include <sstream>
@@ -7,7 +8,7 @@
 #include <random>
 #include <stdlib.h>
 #include <regex>
-#include <CQAPI_EX.h>
+#include <map>
 
 using std::string;
 namespace util {
@@ -22,6 +23,4 @@ namespace util {
 	bool checkBot(int64_t QQID, std::vector<int64_t>bot);
 
 	std::string int64_ttos(int64_t num);
-
-
 }

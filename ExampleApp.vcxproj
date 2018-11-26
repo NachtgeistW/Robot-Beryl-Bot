@@ -91,7 +91,6 @@
     <ClInclude Include="functionality\Admin_cmd.h" />
     <ClInclude Include="functionality\basic\random_fortunes.h" />
     <ClInclude Include="functionality\feedback.h" />
-    <ClInclude Include="functionality\functionality.h" />
     <ClInclude Include="functionality\only_being_at.h" />
     <ClInclude Include="functionality\rage_whole.h" />
     <ClInclude Include="functionality\ub_memo_view\search_song_whole.h" />

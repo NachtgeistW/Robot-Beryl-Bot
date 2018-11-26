@@ -6,17 +6,20 @@ public:
 	Omikuji() = default;
 	~Omikuji() = default;
 
+	string ShowHelpInfo(string msg);
 	void GetDailyOmikuji(int64_t qq);
-	void ShowDailyOmikuji (int64_t group, int64_t qq, string msg);
-	void ResetOmikuji(int64_t qq, string msg);
+	string ShowDailyOmikuji (int64_t qq, string msg);
+	void ResetOmikuji(void);
+	string MasterCommand(int64_t qq, string msg);
 
-	int RandInt_binomial(double expected, double variance, int64_t qq)
-	{
-		static std::normal_distribution<> dist(expected, variance);//二项式分布生成随机数
-		static std::mt19937_64 gen(qq);					//给mt提供种子
-		return lround(dist(gen));
-	}
 private:
 	std::map<int64_t, string> daily_omikuji_;
-	string command = "(\\[CQ:at,qq=)(" + std::to_string(util::Beryl) + ")(\\])(.*)(今日运势|抽签)";
+	int RandInt_binomial(double expected, double variance)
+	{
+		static std::normal_distribution<> dist(expected, variance);//二项式分布生成随机数
+		static std::random_device device;						//随机数引擎，需要mt
+		static std::mt19937_64 gen(device());					//给mt提供种子
+		return lround(dist(gen));
+	}
+
 };
