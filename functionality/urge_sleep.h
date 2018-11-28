@@ -1,16 +1,19 @@
 #pragma once
-#include <chrono>
-#include <iomanip> //put_time
+#include "../util/util.h"
 using namespace std::chrono;
 
-class urge_sleep {
+class UrgeSleep {
 private:
-	int send_msg_time = 0;
-	system_clock::time_point sleep_time_begin;
-	system_clock::time_point now = system_clock::now();
-	std::vector<std::string>message;
+	int urge_time_ = 0;
+	system_clock::time_point tp_sleep_begin_ = Tm(2018, 11, 28, 22, 20, 0, 0).to_time_point();
+	system_clock::time_point tp_sleep_end_ = Tm(2018, 11, 29, 0, 0, 0, 0).to_time_point();
+	system_clock::time_point tp_now_ = system_clock::now();
 public:
-	void set_begin_time(system_clock::time_point &time);
-	void check_send_time(void);
-	int check_time_duration(system_clock::time_point time);
+	UrgeSleep() = default;
+	~UrgeSleep() = default;
+
+	system_clock::time_point getCurTime(void) {	return tp_now_;	};
+	bool isTimeToSleep(void) { return (tp_now_ >= tp_sleep_begin_ || tp_now_ <= tp_sleep_end_); }
+	string urgeSleep(int64_t qq);
+	string testUpdate(string msg);
 };

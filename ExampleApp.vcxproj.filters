@@ -42,9 +42,6 @@
     <ClCompile Include="Robot_Beryl_main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="functionality\urge_sleep.cpp">
-      <Filter>源文件\functionality</Filter>
-    </ClCompile>
     <ClCompile Include="util\GroupQQ_act_count.cpp">
       <Filter>源文件\util</Filter>
     </ClCompile>
@@ -72,13 +69,13 @@
     <ClCompile Include="functionality\basic\random_fortunes.cpp">
       <Filter>源文件\functionality\basic</Filter>
     </ClCompile>
+    <ClCompile Include="functionality\urge_sleep.cpp">
+      <Filter>源文件\functionality\basic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\APPINFO.h">
       <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="functionality\urge_sleep.h">
-      <Filter>源文件\functionality</Filter>
     </ClInclude>
     <ClInclude Include="Robot_Beryl_fun.h">
       <Filter>头文件</Filter>
@@ -112,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="util\functionality.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="functionality\urge_sleep.h">
+      <Filter>源文件\functionality\basic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

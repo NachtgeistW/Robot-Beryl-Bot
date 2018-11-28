@@ -1,6 +1,6 @@
 #include "feedback.h"
 
-string feedback::fb_in_group(int64_t groupID, int64_t qq, string msg)
+string Feedback::fb_in_group(int64_t groupID, int64_t qq, string msg)
 {
 	std::regex reg(group);
 	string reply_to_user = "", reply_to_master = "";
@@ -13,7 +13,7 @@ string feedback::fb_in_group(int64_t groupID, int64_t qq, string msg)
 	return reply_to_user;
 }
 
-string feedback::fb_in_privt(int64_t qq, string msg)
+string Feedback::FbInPrivt(int64_t qq, string msg)
 {
 	std::regex reg(privt);
 	string reply_to_user, reply_to_master;

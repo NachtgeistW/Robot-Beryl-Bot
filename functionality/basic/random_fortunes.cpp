@@ -1,14 +1,14 @@
 #include "random_fortunes.h"
 #include <cmath>
-#include <chrono>
+#include <ctime>
 
-string Omikuji::ShowHelpInfo(string msg)
+std::string Omikuji::ShowHelpInfo(string msg)
 {
 	if (!msg.compare("help Omikuji") || !msg.compare("help 抽签"))
 	{
 		return string ("这是开发者留下的话：\n"
 			"“抽签：可以抽一下你今天的音游运势。每天零点机绿会自行清空数据，所以每天都可以抽一次。\n"
-			"语法为“@机绿 今日运势/抽签”。繁体也是可以的。\n"
+			"群聊的语法为“今日运势/抽签@机绿”，私聊就直接发送“今日运势/抽签”吧。繁体也是可以的。\n"
 			"幸运程度从最好到最坏依次为大吉、中吉、小吉、吉、末吉、凶、大凶。"
 			"吉嘛大概就是不好也不坏。"
 			"这种东西，信则有，不信也罢。还是祝各位收割愉快（笑）”");
@@ -59,10 +59,30 @@ void Omikuji::GetDailyOmikuji(int64_t qq)
 	daily_omikuji_.insert(std::make_pair(qq, Omikuji));
 }
 
-string Omikuji::ShowDailyOmikuji(int64_t qq, string msg)
+string Omikuji::ShowOmikujiPrivate(int64_t qq, string msg)
 {
 	string reply;
-	std::regex reg("(今日运势|今日運勢|抽签|抽籤)(\\[CQ:at,qq=)?(" + std::to_string(util::Beryl) + ")?(\\])?(.*)?");
+	if (msg == "抽签")
+	{
+		auto target_qq = daily_omikuji_.find(qq);
+		//if user do not roll the Omikuji
+		if (target_qq == daily_omikuji_.end())
+		{
+			GetDailyOmikuji(qq);
+			reply = "今日音游运势：\n" + daily_omikuji_[qq];
+		}
+		else
+		{
+			reply = "你已经抽过今天的运势了……\n今日音游运势：\n" + target_qq->second;
+		}
+	}
+	return reply;
+}
+
+string Omikuji::ShowOmikujiGroup(int64_t qq, string msg)
+{
+	string reply;
+	std::regex reg("(今日运势|今日運勢|抽签|抽籤)(\\[CQ:at,qq=)(" + std::to_string(util::Beryl) + ")(\\])(.*)");
 	if (std::regex_match(msg, reg) == true)
 	{
 		auto target_qq = daily_omikuji_.find(qq);

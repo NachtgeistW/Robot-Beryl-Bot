@@ -8,7 +8,8 @@ public:
 
 	string ShowHelpInfo(string msg);
 	void GetDailyOmikuji(int64_t qq);
-	string ShowDailyOmikuji (int64_t qq, string msg);
+	string ShowOmikujiPrivate(int64_t qq, string msg);
+	string ShowOmikujiGroup(int64_t qq, string msg);
 	void ResetOmikuji(void);
 	string MasterCommand(int64_t qq, string msg);
 
@@ -21,5 +22,4 @@ private:
 		static std::mt19937_64 gen(device());					//给mt提供种子
 		return lround(dist(gen));
 	}
-
 };

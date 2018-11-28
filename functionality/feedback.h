@@ -1,12 +1,12 @@
 #pragma once
 #include "../util/util.h"
-class feedback
+class Feedback
 {
 public:
-	feedback() = default;
+	Feedback() = default;
 	string fb_in_group(int64_t group, int64_t qq, string msg);
-	string fb_in_privt(int64_t qq, string msg);
-	~feedback() = default;
+	string FbInPrivt(int64_t qq, string msg);
+	~Feedback() = default;
 
 private:
 	string group = "(\\[CQ:at,qq=)(" + util::int64_ttos(util::Beryl) + ")(\\])(.*)(反馈|告诉你主人)(.*)";

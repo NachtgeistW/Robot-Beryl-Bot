@@ -7,9 +7,10 @@ using namespace CQ;
 static Logger Robot_Beryl("Robot_Beryl");
 
 //initialize
-feedback fb;
+Feedback fb;
 WholeRepeat wr;
 Omikuji omi;
+UrgeSleep us;
 
 EVE_PrivateMsg_EX(SendPrivateMsg)
 {
@@ -19,25 +20,27 @@ EVE_PrivateMsg_EX(SendPrivateMsg)
 
 	if (!message.compare("test"))
 		msg << "已启动" << send;
-
-	if (!message.compare("help"))
+	else if (!message.compare("help"))
 		eve.sendMsg("这是开发者留下的话：\n"
-		"“你好，这里夜轮。机绿目前支持的功能如下：\n"
-		"反馈：语法为“@机绿 + 反馈/告诉你主人 + （你想反馈给开发者的话）”，机绿会把这条消息转发给开发者。\n"
-		"示例：@机绿 告诉你主人夏橙妹妹她错了\n"
-		"抽签：可以抽一下你今天的音游运势。具体语法请发送help Omikuji或help 抽签查看。\n"
-		"另有一些算不上功能的属性，如嘲讽。\n"
-		"机绿的功能尚在不断完善中。如果出了什么意外的话请原谅。\n"
-		"祝使用愉快（鞠躬）\n"
-		"Creator: NachtgeistW. QQID:562231326\n"
-		"A botched imitation.”");
+			"“你好，这里夜轮。机绿目前支持的功能如下：\n"
+			"反馈：语法为“@机绿 + 反馈/告诉你主人 + （你想反馈给开发者的话）”，机绿会把这条消息转发给开发者。\n"
+			"示例：@机绿 告诉你主人夏橙妹妹她错了\n"
+			"抽签：可以抽一下你今天的音游运势。具体语法请发送“help Omikuji或help 抽签”查看。\n"
+			"机绿的功能尚在不断完善中。如果出了什么意外的话请原谅。\n"
+			"祝相处愉快（鞠躬）\n"
+			"Creator: NachtgeistW. QQID: 562231326\n"
+			"A botched imitation.”");
+	else
+		eve.sendMsg("我读不懂啦……对了，这是开发者留下的话：\n"
+			"“如果你有什么话想直接对夜轮说的话，就使用反馈功能吧。"
+			"语法为“@机绿 + 反馈/告诉你主人 + （你想反馈给开发者的话）”");
 
 	//send feedback message
-	msg << fb.fb_in_privt(eve.fromQQ, eve.message) << send;
+	msg << fb.FbInPrivt(eve.fromQQ, eve.message) << send;
 
 	//Daily Omikuji 
 	msg << omi.ShowHelpInfo(eve.message) << send;
-	msg << omi.ShowDailyOmikuji(eve.fromQQ, eve.message) << send;
+	msg << omi.ShowOmikujiPrivate(eve.fromQQ, eve.message) << send;
 	msg << omi.MasterCommand(eve.fromQQ, eve.message) << send;
 
 }
@@ -58,9 +61,18 @@ EVE_GroupMsg_EX(GroupLightFunction) {
 
 		//functions are contained in random_fortunes.h and random_fortunes.cpp
 		msg << omi.ShowHelpInfo(eve.message) << send;
-		msg << omi.ShowDailyOmikuji(eve.fromQQ, eve.message) << send;
+		msg << omi.ShowOmikujiGroup(eve.fromQQ, eve.message) << send;
 		omi.ResetOmikuji();
 		msg << omi.MasterCommand(eve.fromQQ, eve.message) << send;
+
+		us.testUpdate(eve.message);
+	}
+	catch (std::runtime_error err) {
+		std::string to_be_sent = "我很确定，出现runtime_error了。\n"
+			"消息是从群" + util::int64_ttos(eve.fromGroup) + "里的成员" + util::int64_ttos(eve.fromQQ) + "发送的“" + eve.message + "”。\n"
+			"出错的模块是GroupLightFunction。原因是" + err.what() + "\n"
+			"对不起了……请帮忙看一下。";
+		sendPrivateMsg(util::Master, to_be_sent);
 	}
 	catch (...) {
 		std::string to_be_sent = "好、好像出问题了！\n"
