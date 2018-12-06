@@ -33,7 +33,7 @@ string At::select_reply(void)
 		reply_to_member = "你想玩UNO？UNO的话请找那个撑阳伞的小姐姐";
 		break;
 	case 41:	case 42:	case 43:	case 44:	case 45:
-		reply_to_member = "来D.N.ChessRoom（674525758）玩吗？UNO黑白棋数独或帝灭斗井字棋了解一下？";
+		reply_to_member = "来D.N.ChessRoom（674525758）玩吗？UNO、黑白棋、数独和或帝灭斗井字棋了解一下？";
 		break;
 	case 46:	case 47:	case 48:	case 49:	case 50:
 		reply_to_member = "来杯喜茶的芝士夜轮，啊不对，芝士绿妍吗？（日常安利）";
