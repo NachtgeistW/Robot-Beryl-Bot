@@ -75,10 +75,10 @@
     106, //发送私聊消息		sendPrivateMsg
     //110, //发送赞				sendLike
     //120, //置群员移除			setGroupKick
-    121, //置群员禁言			setGroupBan
+    //121, //置群员禁言			setGroupBan
     //122, //置群管理员			setGroupAdmin
-    123, //置全群禁言			setGroupWholeBan
-    124, //置匿名群员禁言		setGroupAnonymousBan
+    //123, //置全群禁言			setGroupWholeBan
+    //124, //置匿名群员禁言		setGroupAnonymousBan
     //125, //置群匿名设置		setGroupAnonymous
     //126, //置群成员名片		setGroupCard
     //127, //[敏感]置群退出		setGroupLeave

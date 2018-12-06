@@ -11,7 +11,16 @@ Feedback fb;
 WholeRepeat wr;
 Omikuji omi;
 UrgeSleep us;
+Heytea ht;
 
+EVE_Enable(Enable)
+{
+	Robot_Beryl.Info("应用被启用");
+	//load HEYTEA tea info
+	ht.LoadTeaList(util::path + "heytea.txt");
+
+	return 0;
+}
 EVE_PrivateMsg_EX(SendPrivateMsg)
 {
 	Robot_Beryl.Debug() << DEBUGINFO << eve.message;
@@ -20,34 +29,37 @@ EVE_PrivateMsg_EX(SendPrivateMsg)
 
 	if (!message.compare("test"))
 		msg << "已启动" << send;
-	else if (!message.compare("help"))
+	if (!message.compare("help"))
 		eve.sendMsg("这是开发者留下的话：\n"
 			"“你好，这里夜轮。机绿目前支持的功能如下：\n"
 			"反馈：语法为“@机绿 + 反馈/告诉你主人 + （你想反馈给开发者的话）”，机绿会把这条消息转发给开发者。\n"
 			"示例：@机绿 告诉你主人夏橙妹妹她错了\n"
 			"抽签：可以抽一下你今天的音游运势。具体语法请发送“help Omikuji或help 抽签”查看。\n"
+			"抽喜茶：喜茶了解一下？具体语法请发送“help heytea或help 喜茶”查看。"
 			"机绿的功能尚在不断完善中。如果出了什么意外的话请原谅。\n"
 			"祝相处愉快（鞠躬）\n"
 			"Creator: NachtgeistW. QQID: 562231326\n"
 			"A botched imitation.”");
-	else
-		eve.sendMsg("我读不懂啦……对了，这是开发者留下的话：\n"
-			"“如果你有什么话想直接对夜轮说的话，就使用反馈功能吧。"
-			"语法为“@机绿 + 反馈/告诉你主人 + （你想反馈给开发者的话）”");
 
 	//send feedback message
 	msg << fb.FbInPrivt(eve.fromQQ, eve.message) << send;
 
-	//Daily Omikuji 
+	//Daily Omikuji. Functions are contained in random_fortunes.h and random_fortunes.cpp
 	msg << omi.ShowHelpInfo(eve.message) << send;
 	msg << omi.ShowOmikujiPrivate(eve.fromQQ, eve.message) << send;
-	msg << omi.MasterCommand(eve.fromQQ, eve.message) << send;
+	//omi.MasterCommand(eve.fromGroup, eve.fromQQ, eve.message);
 
+	//HEYTEA. Functions are contained in random_heytea.h and random_heytea.cpp
+	ht.ShowHelpInfo(eve.fromQQ, eve.message);
+	ht.ShowTeaType(eve.fromQQ, eve.message);
+	ht.ShowTea(eve.fromQQ, eve.message);
 }
 
 EVE_GroupMsg_EX(GroupLightFunction) {
 	Robot_Beryl.Debug() << DEBUGINFO << eve.message;
 	auto msg = eve.sendMsg();
+	int64_t group = eve.fromGroup;
+	int64_t qq = eve.fromQQ;
 
 	try {
 		//send feedback message
@@ -59,19 +71,20 @@ EVE_GroupMsg_EX(GroupLightFunction) {
 
 		reply_origin_msg(eve.fromGroup, eve.fromQQ, eve.message);
 
-		//functions are contained in random_fortunes.h and random_fortunes.cpp
+		//Daily Omikuji. Functions are contained in random_fortunes.h and random_fortunes.cpp
 		msg << omi.ShowHelpInfo(eve.message) << send;
 		msg << omi.ShowOmikujiGroup(eve.fromQQ, eve.message) << send;
 		omi.ResetOmikuji();
-		msg << omi.MasterCommand(eve.fromQQ, eve.message) << send;
+		omi.MasterCommand(eve.fromGroup, eve.fromQQ, eve.message);
 
-		us.testUpdate(eve.message);
+		//HEYTEA. Functions are contained in random_heytea.h and random_heytea.cpp
+		ht.ShowTea(eve.fromGroup, eve.fromQQ, eve.message);
 	}
 	catch (std::runtime_error err) {
 		std::string to_be_sent = "我很确定，出现runtime_error了。\n"
 			"消息是从群" + util::int64_ttos(eve.fromGroup) + "里的成员" + util::int64_ttos(eve.fromQQ) + "发送的“" + eve.message + "”。\n"
 			"出错的模块是GroupLightFunction。原因是" + err.what() + "\n"
-			"对不起了……请帮忙看一下。";
+			"对不起……请帮忙看一下。";
 		sendPrivateMsg(util::Master, to_be_sent);
 	}
 	catch (...) {
@@ -155,23 +168,3 @@ EVE_GroupMsg_EX(SetGroupBan){
 			msg << "我做不到……" << send;
 	}
 }
-
-/*
-EVE_GroupMsg_EX(Repeat_Taunt) {
-	Robot_Beryl.Debug() << DEBUGINFO << eve.message;
-	auto msg = eve.sendMsg();
-	
-	//functions are contained in rage.h and rage.cpp
-	try {
-		msg << wr.stopWholeRepeat(eve.fromGroup, eve.message) << send;
-		//msg << tauntProUp(eve.fromGroup, eve.fromQQ, eve.message) << send;
-	}
-	catch (...) {
-		std::string to_be_sent = "好、好像出问题了！\n"
-			"消息是从群" + util::int64_ttos(eve.fromGroup) + "里的成员" + util::int64_ttos(eve.fromQQ) + "发送的“" + eve.message + "”。\n"
-			"出错的模块是Repeat_Taunt。\n"
-			"真的很对不起，请帮忙看一下！";
-		sendPrivateMsg(util::Master, to_be_sent);
-	}
-}
-*/

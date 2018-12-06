@@ -1,6 +1,7 @@
 #include "random_fortunes.h"
 #include <cmath>
 #include <ctime>
+using namespace std::chrono;
 
 std::string Omikuji::ShowHelpInfo(string msg)
 {
@@ -8,9 +9,8 @@ std::string Omikuji::ShowHelpInfo(string msg)
 	{
 		return string ("这是开发者留下的话：\n"
 			"“抽签：可以抽一下你今天的音游运势。每天零点机绿会自行清空数据，所以每天都可以抽一次。\n"
-			"群聊的语法为“今日运势/抽签@机绿”，私聊就直接发送“今日运势/抽签”吧。繁体也是可以的。\n"
+			"群聊的语法为“@机绿 今日运势/抽签”，私聊就直接发送“今日运势/抽签”吧。繁体也是可以的。\n"
 			"幸运程度从最好到最坏依次为大吉、中吉、小吉、吉、末吉、凶、大凶。"
-			"吉嘛大概就是不好也不坏。"
 			"这种东西，信则有，不信也罢。还是祝各位收割愉快（笑）”");
 	}
 	return "";
@@ -20,9 +20,9 @@ void Omikuji::GetDailyOmikuji(int64_t qq)
 {
 	string Omikuji;
 	int Case;
-	while (1)
+	while (true)
 	{
-		Case = RandInt_binomial(3.0, 1.25);
+		Case = RandInt_binomial(3.0, 1.25, qq);
 		if (Case >= 0 && Case <= 7)
 			break;
 	}
@@ -82,7 +82,7 @@ string Omikuji::ShowOmikujiPrivate(int64_t qq, string msg)
 string Omikuji::ShowOmikujiGroup(int64_t qq, string msg)
 {
 	string reply;
-	std::regex reg("(今日运势|今日運勢|抽签|抽籤)(\\[CQ:at,qq=)(" + std::to_string(util::Beryl) + ")(\\])(.*)");
+	std::regex reg("(\\[CQ:at,qq=)(" + std::to_string(util::Beryl) + ")(\\])(.*)(今日运势|今日運勢|抽签|抽籤)");
 	if (std::regex_match(msg, reg) == true)
 	{
 		auto target_qq = daily_omikuji_.find(qq);
@@ -91,6 +91,7 @@ string Omikuji::ShowOmikujiGroup(int64_t qq, string msg)
 		{
 			GetDailyOmikuji(qq);
 			reply = "[CQ:at,qq=" + util::int64_ttos(qq) + "] \n今日音游运势：\n" + daily_omikuji_[qq];
+
 		}
 		else
 		{
@@ -102,32 +103,74 @@ string Omikuji::ShowOmikujiGroup(int64_t qq, string msg)
 
 void Omikuji::ResetOmikuji(void)
 {
+	/*
+	duration<int, std::ratio<24*60*60>> day;
 	//auto clear
-	std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
+	system_clock::time_point now_p = system_clock::now();
+	//time_t now_t = system_clock::to_time_t(system_clock::now());
+
+	//transform specified time point to time_point
+	tm t_p;
+	t_p.tm_hour = 0;
+	t_p.tm_min = 0;
+	t_p.tm_sec = 0;
+	time_t trans = mktime(&t_p);
+	system_clock::time_point speci_p = system_clock::from_time_t(trans);
+
+	if (now_p - speci_p == day)
+		daily_omikuji_.clear();
+	*/
 }
 
-string Omikuji::MasterCommand(int64_t qq, string msg)
+string Omikuji::MasterCommand(int64_t group, int64_t qq, string msg)
 {
+	enum cmd { clear, view };
+	std::map<string, int> cmd_stoi;
+	cmd_stoi.insert({ "clear", clear });
+	cmd_stoi.insert({ "view", view });
+
 	if (qq == util::Master)
 	{
 		if (msg.compare("Omikuji all clear") == 0)
 		{
 			daily_omikuji_.clear();
-			return "我已经往抽签筒里放了新的签了。夜轮放心，我摇得很均匀的！";
+			CQ::sendGroupMsg(group, "我已经往抽签筒里放了新的签了。夜轮放心，我摇得很均匀的！");
 		}
 		try {
-			std::regex reg("(Omikuji clear)(\\[CQ:at,qq=)([1-9][0-9]{4,})(\\])(.*)");
+			std::regex reg("(Omikuji )(.*)(\\[CQ:at,qq=)([1-9][0-9]{4,})(\\])(.)");
 			std::smatch match;
 			if (std::regex_match(msg, match, reg) == true)
 			{
-				int64_t target_qq = std::stoll(match.str(3));
-				if (daily_omikuji_.find(target_qq) != daily_omikuji_.end())
+				int64_t target_qq = std::stoll(match.str(4));
+				string cmd = match.str(2);
+				switch (cmd_stoi[cmd])
 				{
-					daily_omikuji_.erase(target_qq);
-					return string("好，清完啦！[CQ:at,qq=" + match.str(3) + "] 请再抽一次吧");
+				case clear:
+				{
+					if (daily_omikuji_.find(target_qq) != daily_omikuji_.end())
+					{
+						daily_omikuji_.erase(target_qq);
+						string reply = "好，清完啦！[CQ:at,qq=" + match.str(4) + "] 请再抽一次吧";
+						CQ::sendGroupMsg(group, reply);
+					}
+					else
+						CQ::sendGroupMsg(group, "夜轮你干啥啊？你指定的人没抽过签啊……");
 				}
-				else
-					return "夜轮你干啥啊？你指定的人没抽过签啊……";
+				break;
+				case view:
+				{
+					if (daily_omikuji_.find(target_qq) != daily_omikuji_.end())
+					{
+						string reply = "你要看他的运势啊……\n" + daily_omikuji_[target_qq];
+						CQ::sendGroupMsg(group, reply);
+					}
+					else
+						CQ::sendGroupMsg(group, "夜轮你干啥啊？你指定的人没抽过签啊……");
+				}
+				break;
+				default:
+					break;
+				}
 			}
 		} catch (std::regex_error e) {
 			string error = e.what() + e.code();

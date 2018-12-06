@@ -42,11 +42,3 @@ void useCmdtoBan(EVEGroupMsg &eve, GroupMemberInfo MemberAInfo, GroupMemberInfo 
 	else
 		msg << "……" << send;
 }
-
-
-/*void throwError(static runtime_error err)
-{
-	sendPrivateMsg(Master, "啊咧，美好的记忆崩塌了……最后的景象是……");
-	sendPrivateMsg(Master, err.what());
-}
-*/
