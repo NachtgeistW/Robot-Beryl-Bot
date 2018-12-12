@@ -18,9 +18,9 @@ EVE_Enable(Enable)
 	Robot_Beryl.Info("应用被启用");
 	//load HEYTEA tea info
 	ht.LoadTeaList(util::path + "heytea.txt");
-
 	return 0;
 }
+
 EVE_PrivateMsg_EX(SendPrivateMsg)
 {
 	Robot_Beryl.Debug() << DEBUGINFO << eve.message;
@@ -72,9 +72,9 @@ EVE_GroupMsg_EX(GroupLightFunction) {
 		reply_origin_msg(eve.fromGroup, eve.fromQQ, eve.message);
 
 		//Daily Omikuji. Functions are contained in random_fortunes.h and random_fortunes.cpp
+		omi.ResetOmikuji();
 		msg << omi.ShowHelpInfo(eve.message) << send;
 		msg << omi.ShowOmikujiGroup(eve.fromQQ, eve.message) << send;
-		omi.ResetOmikuji();
 		omi.MasterCommand(eve.fromGroup, eve.fromQQ, eve.message);
 
 		//HEYTEA. Functions are contained in random_heytea.h and random_heytea.cpp

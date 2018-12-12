@@ -3,6 +3,11 @@
 #include <ctime>
 using namespace std::chrono;
 
+Omikuji::Omikuji()
+{
+	origin_t = system_clock::to_time_t(system_clock::now());
+}
+
 std::string Omikuji::ShowHelpInfo(string msg)
 {
 	if (!msg.compare("help Omikuji") || !msg.compare("help ≥È«©"))
@@ -103,23 +108,16 @@ string Omikuji::ShowOmikujiGroup(int64_t qq, string msg)
 
 void Omikuji::ResetOmikuji(void)
 {
-	/*
-	duration<int, std::ratio<24*60*60>> day;
-	//auto clear
-	system_clock::time_point now_p = system_clock::now();
-	//time_t now_t = system_clock::to_time_t(system_clock::now());
-
-	//transform specified time point to time_point
-	tm t_p;
-	t_p.tm_hour = 0;
-	t_p.tm_min = 0;
-	t_p.tm_sec = 0;
-	time_t trans = mktime(&t_p);
-	system_clock::time_point speci_p = system_clock::from_time_t(trans);
-
-	if (now_p - speci_p == day)
+	time_t now_t = system_clock::to_time_t(system_clock::now());
+	tm *origin_tm = new tm(), *now_tm = new tm();
+	localtime_s(origin_tm, &origin_t);
+	localtime_s(now_tm, &now_t);
+	if (now_tm->tm_mday != origin_tm->tm_mday)
+	{
 		daily_omikuji_.clear();
-	*/
+		origin_t = now_t;
+		localtime_s(origin_tm, &origin_t);
+	}
 }
 
 string Omikuji::MasterCommand(int64_t group, int64_t qq, string msg)
@@ -175,6 +173,10 @@ string Omikuji::MasterCommand(int64_t group, int64_t qq, string msg)
 		} catch (std::regex_error e) {
 			string error = e.what() + e.code();
 			CQ::sendPrivateMsg(util::Master, error.c_str());
+		}
+		if (msg == "view time")
+		{
+			CQ::sendGroupMsg(group, std::to_string(origin_t).c_str());
 		}
 	}
 	return "";

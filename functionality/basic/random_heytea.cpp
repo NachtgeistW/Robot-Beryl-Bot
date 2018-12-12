@@ -6,22 +6,34 @@ bool Heytea::LoadTeaList(const string path)
 	std::vector<string> temp;
 	std::ifstream input(path);
 	if (!input.good())
-		return false;
-	while (std::getline(input, line))
 	{
-		if (line.find("#") != line.npos)
+		CQ::sendPrivateMsg(util::Master, "我连喜茶的菜单都找不到……");
+		return false;
+	}
+	try {
+		while (std::getline(input, line))
 		{
-			line.erase(line.begin());
-			kind = line;
-			tea_type_.push_back(kind);
+			if (line.find("#") != line.npos)
+			{
+				line.erase(line.begin());
+				kind = line;
+				tea_type_.push_back(kind);
+			}
+			else if (line == "-")
+			{
+				tea_list_.insert(std::make_pair(kind, temp));
+				temp.clear();
+			}
+			else
+				temp.push_back(line);
 		}
-		else if (line == "-")
-		{
-			tea_list_.insert(std::make_pair(kind, temp));
-			temp.clear();
-		}
-		else
-			temp.push_back(line);
+	}
+	catch (std::exception exc)
+	{
+		std::string to_be_send = "那个……你确定你给我的喜茶菜单没错吗？你看看这里：\n";
+		to_be_send += exc.what();
+		CQ::sendPrivateMsg(util::Master, to_be_send);
+		return false;
 	}
 	return true;
 }

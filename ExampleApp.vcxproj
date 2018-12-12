@@ -85,7 +85,6 @@
     <ClCompile Include="Robot_Beryl_main.cpp" />
     <ClCompile Include="src\appmain.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="util\GroupQQ_act_count.cpp" />
     <ClCompile Include="util\util.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -101,7 +100,6 @@
     <ClInclude Include="Robot_Beryl_fun.h" />
     <ClInclude Include="src\APPINFO.h" />
     <ClInclude Include="util\functionality.h" />
-    <ClInclude Include="util\GroupQQ_act_count.h" />
     <ClInclude Include="util\util.h" />
   </ItemGroup>
   <ItemGroup>

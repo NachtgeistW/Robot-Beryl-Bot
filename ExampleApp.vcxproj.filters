@@ -42,9 +42,6 @@
     <ClCompile Include="Robot_Beryl_main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="util\GroupQQ_act_count.cpp">
-      <Filter>源文件\util</Filter>
-    </ClCompile>
     <ClCompile Include="util\util.cpp">
       <Filter>源文件\util</Filter>
     </ClCompile>
@@ -82,9 +79,6 @@
     </ClInclude>
     <ClInclude Include="Robot_Beryl_fun.h">
       <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="util\GroupQQ_act_count.h">
-      <Filter>源文件\util</Filter>
     </ClInclude>
     <ClInclude Include="util\util.h">
       <Filter>源文件\util</Filter>
