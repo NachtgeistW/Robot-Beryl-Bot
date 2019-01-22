@@ -5,7 +5,7 @@ using namespace std::chrono;
 
 Omikuji::Omikuji()
 {
-	origin_t = system_clock::to_time_t(system_clock::now());
+	origin_t_ = system_clock::to_time_t(system_clock::now());
 }
 
 std::string Omikuji::ShowHelpInfo(string msg)
@@ -87,7 +87,7 @@ string Omikuji::ShowOmikujiPrivate(int64_t qq, string msg)
 string Omikuji::ShowOmikujiGroup(int64_t qq, string msg)
 {
 	string reply;
-	std::regex reg("(\\[CQ:at,qq=)(" + std::to_string(util::Beryl) + ")(\\])(.*)(今日运势|今日運勢|抽签|抽籤)");
+	std::regex reg(util::kat_beryl + "(今日运势|今日運勢|抽签|抽籤)");
 	if (std::regex_match(msg, reg) == true)
 	{
 		auto target_qq = daily_omikuji_.find(qq);
@@ -110,13 +110,12 @@ void Omikuji::ResetOmikuji(void)
 {
 	time_t now_t = system_clock::to_time_t(system_clock::now());
 	tm *origin_tm = new tm(), *now_tm = new tm();
-	localtime_s(origin_tm, &origin_t);
+	localtime_s(origin_tm, &origin_t_);
 	localtime_s(now_tm, &now_t);
 	if (now_tm->tm_mday != origin_tm->tm_mday)
 	{
 		daily_omikuji_.clear();
-		origin_t = now_t;
-		localtime_s(origin_tm, &origin_t);
+		origin_t_ = now_t;
 	}
 }
 
@@ -176,7 +175,7 @@ string Omikuji::MasterCommand(int64_t group, int64_t qq, string msg)
 		}
 		if (msg == "view time")
 		{
-			CQ::sendGroupMsg(group, std::to_string(origin_t).c_str());
+			CQ::sendGroupMsg(group, std::to_string(origin_t_).c_str());
 		}
 	}
 	return "";

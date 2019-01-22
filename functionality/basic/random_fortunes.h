@@ -16,7 +16,7 @@ public:
 
 private:
 	std::map<int64_t, string> daily_omikuji_;
-	time_t origin_t;
+	time_t origin_t_;
 	int RandInt_binomial(double expected, double variance, int64_t qq)
 	{
 		static std::normal_distribution<> dist(expected, variance);//二项式分布生成随机数

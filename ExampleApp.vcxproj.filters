@@ -72,6 +72,9 @@
     <ClCompile Include="functionality\basic\random_heytea.cpp">
       <Filter>源文件\functionality\basic</Filter>
     </ClCompile>
+    <ClCompile Include="functionality\basic\cytus_black_per_cal.cpp">
+      <Filter>源文件\functionality\basic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\APPINFO.h">
@@ -111,6 +114,9 @@
       <Filter>源文件\functionality\basic</Filter>
     </ClInclude>
     <ClInclude Include="functionality\basic\random_heytea.h">
+      <Filter>源文件\functionality\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="functionality\basic\cytus_black_per_cal.h">
       <Filter>源文件\functionality\basic</Filter>
     </ClInclude>
   </ItemGroup>

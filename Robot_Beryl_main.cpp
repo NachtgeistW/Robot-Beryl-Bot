@@ -12,6 +12,7 @@ WholeRepeat wr;
 Omikuji omi;
 UrgeSleep us;
 Heytea ht;
+ResultInfo b_per;
 
 EVE_Enable(Enable)
 {
@@ -79,6 +80,8 @@ EVE_GroupMsg_EX(GroupLightFunction) {
 
 		//HEYTEA. Functions are contained in random_heytea.h and random_heytea.cpp
 		ht.ShowTea(eve.fromGroup, eve.fromQQ, eve.message);
+
+		b_per.Main(eve.fromGroup, eve.fromQQ, eve.message);
 	}
 	catch (std::runtime_error err) {
 		std::string to_be_sent = "我很确定，出现runtime_error了。\n"
