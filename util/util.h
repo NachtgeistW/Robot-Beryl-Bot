@@ -16,7 +16,7 @@ namespace util {
 	static const int64_t Beryl = 3276553814;		//机器人的QQ号
 	static const int64_t Master = 562231326;	//主人的QQ号
 	static const std::string path = "conf\\";
-	static const string kat_beryl = "\\[CQ:at,qq=3276553814\\][ \\t]*";
+	static const string kat_beryl_regex = "\\[CQ:at,qq=3276553814\\][ \\t]*";
 	int RandInt_uniform(int begin, int end);
 
 	static std::vector<int64_t> Robot{ 2718434132, 3304584594, 3461119188, 2748920600, 2130638764,530752474 };

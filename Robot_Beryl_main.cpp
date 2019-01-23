@@ -12,7 +12,7 @@ WholeRepeat wr;
 Omikuji omi;
 UrgeSleep us;
 Heytea ht;
-ResultInfo b_per;
+CytusResult b_per;
 
 EVE_Enable(Enable)
 {

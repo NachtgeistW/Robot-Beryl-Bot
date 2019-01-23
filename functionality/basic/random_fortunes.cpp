@@ -28,7 +28,7 @@ void Omikuji::GetDailyOmikuji(int64_t qq)
 	while (true)
 	{
 		Case = RandInt_binomial(3.0, 1.25, qq);
-		if (Case >= 0 && Case <= 7)
+		if (Case >= 0 && Case <= 6)
 			break;
 	}
 	//select an Omikuji
@@ -87,7 +87,7 @@ string Omikuji::ShowOmikujiPrivate(int64_t qq, string msg)
 string Omikuji::ShowOmikujiGroup(int64_t qq, string msg)
 {
 	string reply;
-	std::regex reg(util::kat_beryl + "(今日运势|今日運勢|抽签|抽籤)");
+	std::regex reg(util::kat_beryl_regex + "(今日运势|今日運勢|抽签|抽籤)");
 	if (std::regex_match(msg, reg) == true)
 	{
 		auto target_qq = daily_omikuji_.find(qq);
@@ -134,12 +134,12 @@ string Omikuji::MasterCommand(int64_t group, int64_t qq, string msg)
 			CQ::sendGroupMsg(group, "我已经往抽签筒里放了新的签了。夜轮放心，我摇得很均匀的！");
 		}
 		try {
-			std::regex reg("(Omikuji )(.*)(\\[CQ:at,qq=)([1-9][0-9]{4,})(\\])(.)");
+			std::regex reg("sudo Omikuji (.*)\\[CQ:at,qq=([1-9][0-9]{4,})\\].");
 			std::smatch match;
 			if (std::regex_match(msg, match, reg) == true)
 			{
-				int64_t target_qq = std::stoll(match.str(4));
-				string cmd = match.str(2);
+				int64_t target_qq = std::stoll(match.str(2));
+				string cmd = match.str(1);
 				switch (cmd_stoi[cmd])
 				{
 				case clear:
@@ -172,10 +172,6 @@ string Omikuji::MasterCommand(int64_t group, int64_t qq, string msg)
 		} catch (std::regex_error e) {
 			string error = e.what() + e.code();
 			CQ::sendPrivateMsg(util::Master, error.c_str());
-		}
-		if (msg == "view time")
-		{
-			CQ::sendGroupMsg(group, std::to_string(origin_t_).c_str());
 		}
 	}
 	return "";

@@ -2,67 +2,68 @@
 
 std::string at(int64_t qq) { return "[CQ:at,qq=" + std::to_string(qq) + "] "; }
 
-void ResultInfo::SetResultNum(double tp_int, double tp_frac, double perfect, double good, double bad, double miss)
+void CytusResult::SetCytusResult(double tp_int, double tp_frac, double perfect, double good, double bad, double miss)
 {
-	tp = tp_int + 0.01*tp_frac;
-	this->perfect = perfect;
-	this->good = good;
-	this->bad = bad;
-	this->miss = miss;
+	tp_ = tp_int + 0.01*tp_frac;
+	this->perfect_ = perfect;
+	this->good_ = good;
+	this->bad_ = bad;
+	this->miss_ = miss;
 }
 
-void ResultInfo::SetResultNum(double tp_int, double tp_frac, double perfect)
+void CytusResult::SetCytusResult(double tp_int, double tp_frac, double perfect)
 {
-	tp = tp_int + 0.01*tp_frac;
-	this->perfect = perfect;
+	tp_ = tp_int + 0.01*tp_frac;
+	this->perfect_ = perfect;
 }
 
-void ResultInfo::ShowResult(int64_t group, int64_t qq)
-{
-	string reply = at(qq) + "计算结果：" + std::to_string(calculation()) + "\n可能会不准，如果出错了请原谅……";
-	CQ::sendGroupMsg(group, reply);
-}
 
-void ResultInfo::ShowResult(int64_t qq)
+void BlackCalculatePrivate::ShowResult(const int64_t qq)
 {
-	string reply = "计算结果：" + std::to_string(calculation()) + "\n可能会不准，如果出错了请原谅……";
+	string reply = "计算结果：" + std::to_string(Calculate()) + "\n可能会不准，如果出错了请原谅……";
 	CQ::sendPrivateMsg(qq, reply);
 }
 
-void ResultInfo::Main(int64_t group, int64_t qq, string msg)
+void BlackCalculatePrivate::Main(const int64_t qq, const string msg)
 {
 	std::smatch res;
-	std::regex regNM(NM);
-	std::regex regMM(MM);
+	std::regex regNM(knm_regex_);
+	std::regex regMM(kmm_regex_);
 	if (std::regex_match(msg, res, regNM))
 	{
-		SetResultNum(std::stod(res[1].str()), std::stod(res[2].str()), std::stod(res[3].str()),
+		SetCytusResult(std::stod(res[1].str()), std::stod(res[2].str()), std::stod(res[3].str()),
 			std::stod(res[4].str()), std::stod(res[5].str()), std::stod(res[6].str()));
-		ShowResult(group, qq);
+		ShowResult(qq);
 	}
 	else if (std::regex_match(msg, res, regMM))
 	{
-		SetResultNum(std::stod(res[1].str()), std::stod(res[2].str()), std::stod(res[3].str()));
-		ShowResult(group, qq);
+		SetCytusResult(std::stod(res[1].str()), std::stod(res[2].str()), std::stod(res[3].str()));
+		ShowResult(qq);
 	}
 	Clear();
 }
 
-void ResultInfo::Main(int64_t qq, string msg)
+void BlackCalculateGroup::ShowResult(const int64_t group, const int64_t qq)
+{
+	string reply = at(qq) + "计算结果：" + std::to_string(Calculate()) + "\n可能会不准，如果出错了请原谅……";
+	CQ::sendGroupMsg(group, reply);
+}
+
+void BlackCalculateGroup::Main(const int64_t group, const int64_t qq, const string msg)
 {
 	std::smatch res;
-	std::regex regNM(NM);
-	std::regex regMM(MM);
+	std::regex regNM(knm_regex_);
+	std::regex regMM(kmm_regex_);
 	if (std::regex_match(msg, res, regNM))
 	{
-		SetResultNum(std::stod(res[1].str()), std::stod(res[2].str()), std::stod(res[3].str()),
+		SetCytusResult(std::stod(res[1].str()), std::stod(res[2].str()), std::stod(res[3].str()),
 			std::stod(res[4].str()), std::stod(res[5].str()), std::stod(res[6].str()));
-		ShowResult(qq);
+		ShowResult(group, qq);
 	}
 	else if (std::regex_match(msg, res, regMM))
 	{
-		SetResultNum(std::stod(res[1].str()), std::stod(res[2].str()), std::stod(res[3].str()));
-		ShowResult(qq);
+		SetCytusResult(std::stod(res[1].str()), std::stod(res[2].str()), std::stod(res[3].str()));
+		ShowResult(group, qq);
 	}
 	Clear();
 }
