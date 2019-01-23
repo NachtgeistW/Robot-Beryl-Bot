@@ -47,7 +47,7 @@ void ResultInfo::Main(int64_t group, int64_t qq, string msg)
 	}
 	Clear();
 }
-//需要修改，更简洁一点
+
 void ResultInfo::Main(int64_t qq, string msg)
 {
 	std::smatch res;
