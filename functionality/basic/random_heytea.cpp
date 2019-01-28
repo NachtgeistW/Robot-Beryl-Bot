@@ -40,14 +40,14 @@ bool Heytea::LoadTeaList(const string path)
 
 void Heytea::ShowHelpInfo(int64_t qq, string msg)
 {
-	std::regex reg("(help )(喜茶|heytea)");
+	std::regex reg("help\\s[喜茶|heytea]");
 	if (std::regex_match(msg, reg) == true)
 		CQ::sendPrivateMsg(qq, help_info_);
 }
 
 void Heytea::ShowTeaType(int64_t qq, string msg)
 {
-	std::regex reg("(help )(喜茶种类)");
+	std::regex reg("help\\s喜茶种类");
 	if (std::regex_match(msg, reg) == true)
 	{
 		string reply;
@@ -64,13 +64,13 @@ string Heytea::GetTea(void)
 	return string(tea_type_[type] + "分类下的" + tea_list_[tea_type_[type]][tea]);
 }
 
-string Heytea::GetTea(string str)
+string Heytea::GetTea(const string str)
 {
 	int tea = util::RandInt_uniform(0, tea_list_[str].size() - 1);
 	return string(tea_list_[str][tea]);
 }
 
-void Heytea::ShowTea(int64_t group, int64_t qq, string msg)
+void Heytea::ShowTea(const int64_t group, const int64_t qq, const string msg)
 {
 	string reply;
 	std::regex reg("(\\[CQ:at,qq=)(" + std::to_string(util::Beryl) + ")(\\])(.*)(抽)(.*)");

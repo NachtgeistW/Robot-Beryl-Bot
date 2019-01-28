@@ -8,7 +8,7 @@ Omikuji::Omikuji()
 	origin_t_ = system_clock::to_time_t(system_clock::now());
 }
 
-std::string Omikuji::ShowHelpInfo(string msg)
+std::string Omikuji::ShowHelpInfo(const string msg)
 {
 	if (!msg.compare("help Omikuji") || !msg.compare("help 抽签"))
 	{
@@ -21,13 +21,13 @@ std::string Omikuji::ShowHelpInfo(string msg)
 	return "";
 }
 
-void Omikuji::GetDailyOmikuji(int64_t qq)
+void Omikuji::GetDailyOmikuji(const int64_t qq)
 {
-	string Omikuji;
+	string omikuji;
 	int Case;
 	while (true)
 	{
-		Case = RandInt_binomial(3.0, 1.25, qq);
+		Case = RandIntBinomial(3.0, 1.25, qq);
 		if (Case >= 0 && Case <= 6)
 			break;
 	}
@@ -35,36 +35,36 @@ void Omikuji::GetDailyOmikuji(int64_t qq)
 	switch (Case)
 	{
 	case 0:
-		Omikuji = "大吉 / Great Blessing\n（*゜ー゜*）？\n你今天什么也别做了快去收歌吧！";
+		omikuji = "大吉 / Great Blessing\n（*゜ー゜*）？\n你今天什么也别做了快去收歌吧！";
 		break;
 	case 1:
-		Omikuji = "中吉 / Middle Blessing\n我猜你今天打歌的话，一定会有好结果的吧:-D";
+		omikuji = "中吉 / Middle Blessing\n我猜你今天打歌的话，一定会有好结果的吧:-D";
 		break;
 	case 2:
-		Omikuji = "小吉 / Small Blessing\n大概今天会有意外的惊喜？";
+		omikuji = "小吉 / Small Blessing\n大概今天会有意外的惊喜？";
 		break;
 	case 3:
-		Omikuji = "吉 / Blessing\n不好也不坏呢";
+		omikuji = "吉 / Blessing\n不好也不坏呢";
 		break;
 	case 4:
-		Omikuji = "末吉 / Ending Blessing\n今天应该不是你收歌的好时间，但是你可以试试(￣▽￣)\"";
+		omikuji = "末吉 / Ending Blessing\n今天应该不是你收歌的好时间，但是你可以试试(￣▽￣)\"";
 		break;
 	case 5:
-		Omikuji = "凶 / Curse\n签上说今天不宜打歌>.<";
+		omikuji = "凶 / Curse\n签上说今天不宜打歌>.<";
 		break;
 	case 6:
-		Omikuji = "大凶  / Great Curse\n……确认了一下是大凶……要不你今天去做别的事情吧";
+		omikuji = "大凶  / Great Curse\n……确认了一下是大凶……要不你今天去做别的事情吧";
 		break;
 	default:
-		Omikuji = "Error";
+		omikuji = "Error";
 		break;
 	}
 	
 	//push back
-	daily_omikuji_.insert(std::make_pair(qq, Omikuji));
+	daily_omikuji_.insert(std::make_pair(qq, omikuji));
 }
 
-string Omikuji::ShowOmikujiPrivate(int64_t qq, string msg)
+string Omikuji::ShowOmikujiPrivate(const int64_t qq, const string msg)
 {
 	string reply;
 	if (msg == "抽签")
@@ -84,7 +84,7 @@ string Omikuji::ShowOmikujiPrivate(int64_t qq, string msg)
 	return reply;
 }
 
-string Omikuji::ShowOmikujiGroup(int64_t qq, string msg)
+string Omikuji::ShowOmikujiGroup(const int64_t qq, const string msg)
 {
 	string reply;
 	std::regex reg(util::kat_beryl_regex + "(今日运势|今日運勢|抽签|抽籤)");
@@ -119,7 +119,7 @@ void Omikuji::ResetOmikuji(void)
 	}
 }
 
-string Omikuji::MasterCommand(int64_t group, int64_t qq, string msg)
+string Omikuji::MasterCommand(const int64_t group, const int64_t qq, const string msg)
 {
 	enum cmd { clear, view };
 	std::map<string, int> cmd_stoi;

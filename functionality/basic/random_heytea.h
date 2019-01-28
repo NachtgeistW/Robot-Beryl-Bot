@@ -5,7 +5,7 @@ class Heytea
 	std::map<string, std::vector<string>> tea_list_;
 	std::vector<string> tea_type_;
 	string GetTea(void);
-	string GetTea(string str);
+	string GetTea(const string str);
 	string help_info_ =
 		"你好，来一杯喜茶吗？机绿现在可以抽喜茶所有的饮品了！\n"
 		"指令是“@机绿 抽喜茶”。如果你想抽一个特定的种类（比如说芝士茗茶），那么指令是“@机绿 抽芝士茗茶”。\n"
@@ -18,6 +18,6 @@ public:
 	bool LoadTeaList(const string path);
 	void ShowHelpInfo(int64_t qq, string msg);
 	void ShowTeaType(int64_t qq, string msg);
-	void ShowTea(int64_t group, int64_t qq, string msg);
+	void ShowTea(const int64_t group, const int64_t qq, const string msg);
 	void ShowTea(int64_t qq, string msg);
 };

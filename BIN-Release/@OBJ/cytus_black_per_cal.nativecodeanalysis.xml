@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\56223\onedrive\code\coolq\robot-beryl-bot\functionality\basic</FILEPATH>
+      <FILENAME>cytus_black_per_cal.cpp</FILENAME>
+      <LINE>47</LINE>
+      <COLUMN>9</COLUMN>
+    </SFA>
+    <DEFECTCODE>6282</DEFECTCODE>
+    <DESCRIPTION>运算符不正确: 在 Boolean 上下文中执行了常量赋值。应考虑改用“==”。</DESCRIPTION>
+    <FUNCTION>BlackCalculateGroup::ShowResult</FUNCTION>
+    <DECORATED>?ShowResult@BlackCalculateGroup@@QAEX_J0@Z</DECORATED>
+    <FUNCLINE>44</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+</DEFECTS>

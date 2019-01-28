@@ -12,7 +12,7 @@ WholeRepeat wr;
 Omikuji omi;
 UrgeSleep us;
 Heytea ht;
-CytusResult b_per;
+
 
 EVE_Enable(Enable)
 {
@@ -43,7 +43,7 @@ EVE_PrivateMsg_EX(SendPrivateMsg)
 			"A botched imitation.”");
 
 	//send feedback message
-	msg << fb.FbInPrivt(eve.fromQQ, eve.message) << send;
+	msg << fb.FeedbackPrivate(eve.fromQQ, eve.message) << send;
 
 	//Daily Omikuji. Functions are contained in random_fortunes.h and random_fortunes.cpp
 	msg << omi.ShowHelpInfo(eve.message) << send;
@@ -64,11 +64,11 @@ EVE_GroupMsg_EX(GroupLightFunction) {
 
 	try {
 		//send feedback message
-		msg << fb.fb_in_group(eve.fromGroup, eve.fromQQ, eve.message) << send;
+		msg << fb.FeedbackGroup(eve.fromGroup, eve.fromQQ, eve.message) << send;
 
 		//while only being at.
 		At at;
-		at.only_being_at(eve.fromGroup, eve.message);
+		at.OnlyBeingAt(eve.fromGroup, eve.message);
 
 		reply_origin_msg(eve.fromGroup, eve.fromQQ, eve.message);
 
@@ -81,7 +81,6 @@ EVE_GroupMsg_EX(GroupLightFunction) {
 		//HEYTEA. Functions are contained in random_heytea.h and random_heytea.cpp
 		ht.ShowTea(eve.fromGroup, eve.fromQQ, eve.message);
 
-		b_per.Main(eve.fromGroup, eve.fromQQ, eve.message);
 	}
 	catch (std::runtime_error err) {
 		std::string to_be_sent = "我很确定，出现runtime_error了。\n"

@@ -1,6 +1,6 @@
 #include "only_being_at.h"
 
-string At::select_reply(void)
+string At::SelectReply(void)
 {
 	string reply_to_member;
 	switch (util::RandInt_uniform(0, 50))
@@ -46,10 +46,9 @@ string At::select_reply(void)
 	return reply_to_member;
 }
 
-void At::only_being_at(int64_t group, string msg)
+void At::OnlyBeingAt(int64_t group, string msg)
 {
-	std::regex reg(at);
-	string reply = select_reply();
+	std::regex reg(util::kat_beryl_regex);
 	if (std::regex_match(msg, reg))
-		CQ::sendGroupMsg(group, reply);
+		CQ::sendGroupMsg(group, SelectReply().c_str());
 }

@@ -66,9 +66,6 @@
     <ClCompile Include="functionality\basic\random_fortunes.cpp">
       <Filter>源文件\functionality\basic</Filter>
     </ClCompile>
-    <ClCompile Include="functionality\urge_sleep.cpp">
-      <Filter>源文件\functionality\basic</Filter>
-    </ClCompile>
     <ClCompile Include="functionality\basic\random_heytea.cpp">
       <Filter>源文件\functionality\basic</Filter>
     </ClCompile>
