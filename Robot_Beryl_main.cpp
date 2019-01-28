@@ -27,16 +27,16 @@ EVE_PrivateMsg_EX(SendPrivateMsg)
 	Robot_Beryl.Debug() << DEBUGINFO << eve.message;
 	auto msg = eve.sendMsg();
 	auto message = eve.message;
+	BlackCalculatePrivate bcp;
 
-	if (!message.compare("test"))
-		msg << "已启动" << send;
 	if (!message.compare("help"))
 		eve.sendMsg("这是开发者留下的话：\n"
 			"“你好，这里夜轮。机绿目前支持的功能如下：\n"
-			"反馈：语法为“@机绿 + 反馈/告诉你主人 + （你想反馈给开发者的话）”，机绿会把这条消息转发给开发者。\n"
+			"反馈：语法为“@机绿 + 反馈/告诉你主人+（你想反馈给开发者的话）”，机绿会把这条消息转发给开发者。\n"
 			"示例：@机绿 告诉你主人夏橙妹妹她错了\n"
-			"抽签：可以抽一下你今天的音游运势。具体语法请发送“help Omikuji或help 抽签”查看。\n"
-			"抽喜茶：喜茶了解一下？具体语法请发送“help heytea或help 喜茶”查看。"
+			"抽签：可以抽一下你今天的音游运势。语法请发送“help Omikuji/抽签”。\n"
+			"抽喜茶：喜茶了解一下？语法请发送“help heytea/喜茶”。"
+			"算Cy1/2黑P：语法请发送“help 算黑P/p”。"
 			"机绿的功能尚在不断完善中。如果出了什么意外的话请原谅。\n"
 			"祝相处愉快（鞠躬）\n"
 			"Creator: NachtgeistW. QQID: 562231326\n"
@@ -54,14 +54,24 @@ EVE_PrivateMsg_EX(SendPrivateMsg)
 	ht.ShowHelpInfo(eve.fromQQ, eve.message);
 	ht.ShowTeaType(eve.fromQQ, eve.message);
 	ht.ShowTea(eve.fromQQ, eve.message);
+
+	bcp.Main(eve.fromQQ, eve.message);
+	bcp.ShowHelpInfo(eve.fromQQ, eve.message);
 }
 
 EVE_GroupMsg_EX(GroupLightFunction) {
 	Robot_Beryl.Debug() << DEBUGINFO << eve.message;
 	auto msg = eve.sendMsg();
-	int64_t group = eve.fromGroup;
-	int64_t qq = eve.fromQQ;
+	const int64_t group = eve.fromGroup;
+	const int64_t qq = eve.fromQQ;
 
+	std::regex help_reg(util::kat_beryl_regex + "help");
+	if (std::regex_match(eve.message, help_reg))
+	{
+		eve.sendMsg( "这里机绿！是个bot，大概会帮你算算cytus黑P抽抽签之类的吧……可以私聊发个help看看！");
+	}
+
+	BlackCalculateGroup bcg;
 	try {
 		//send feedback message
 		msg << fb.FeedbackGroup(eve.fromGroup, eve.fromQQ, eve.message) << send;
@@ -81,6 +91,7 @@ EVE_GroupMsg_EX(GroupLightFunction) {
 		//HEYTEA. Functions are contained in random_heytea.h and random_heytea.cpp
 		ht.ShowTea(eve.fromGroup, eve.fromQQ, eve.message);
 
+		bcg.Main(group, qq, eve.message);
 	}
 	catch (std::runtime_error err) {
 		std::string to_be_sent = "我很确定，出现runtime_error了。\n"
