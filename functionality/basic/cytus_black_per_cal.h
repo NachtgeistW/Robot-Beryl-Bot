@@ -14,7 +14,7 @@ public:
 	int Calculate(void) noexcept { return static_cast<int>(round(perfect_ / 0.3 + good_ - tp_ * (perfect_ + good_ + bad_ + miss_) / 30)); };
 	bool IsLegalValue(const double tp, const int calculated_black_perfect) noexcept {
 		const double res = 100 / (perfect_ + good_ + bad_ + miss_) * ((perfect_ - calculated_black_perfect) + 0.7 * calculated_black_perfect + 0.3*good_);
-		return tp == round(res * 100) / 100.00;
+		return (tp == round(res * 100) / 100.00) || (tp == floor(res * 100) / 100.00); //cy1:round; cy2:floor
 	};
 	void SetCytusResult(const double tp_int, const double tp_frac, const double perfect, 
 		const double good, const double bad, const double miss) noexcept;
